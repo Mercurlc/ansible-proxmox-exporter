@@ -26,7 +26,15 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run yamllint
-        run: yamllint -s .
+        run: |
+          yamllint -s .
+          code=$?
+          if [ $code -eq 1 ]; then
+            echo "yamllint found errors"
+            exit 1
+          else
+            echo "yamllint finished with code $code (0=ok, 2=warnings)"
+          fi
 
       - name: Run ansible-lint
         run: ansible-lint -p -v .
