@@ -6,12 +6,6 @@ mapfile -t FILES < <(git ls-files '*.yml' '*.yaml' \
   | grep -Ev '^(\.venv/|\.git/|\.molecule/|__pycache__/)' || true)
 
 if ((${#FILES[@]})); then
-  echo "[pre-push] yamllint"
-  .venv/bin/yamllint -s "${FILES[@]}" || Y=$?
-  if [[ "${Y:-0}" -eq 1 ]]; then
-    echo "[pre-push] yamllint errors"; exit 1
-  fi
-
   echo "[pre-push] ansible-lint"
   .venv/bin/ansible-lint "${FILES[@]}"
 else

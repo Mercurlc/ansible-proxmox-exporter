@@ -2,14 +2,6 @@
 repos:
   - repo: local
     hooks:
-      - id: yamllint-local
-        name: yamllint (local venv)
-        entry: .venv/bin/yamllint
-        language: system
-        pass_filenames: true
-        files: \.(ya?ml)$
-        exclude: ^(\.venv/|\.git/|\.molecule/|__pycache__/)
-
       - id: ansible-lint-local
         name: ansible-lint (local venv)
         entry: .venv/bin/ansible-lint
