@@ -27,8 +27,10 @@ jobs:
 
       - name: Run yamllint
         run: |
+          set +e
           yamllint -s .
           code=$?
+          set -e
           if [ $code -eq 1 ]; then
             echo "yamllint found errors"
             exit 1
