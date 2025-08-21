@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+. .venv/bin/activate
+
+mapfile -t FILES < <(git ls-files '*.yml' '*.yaml' \
+  | grep -Ev '^(\.venv/|\.git/|\.molecule/|__pycache__/)' || true)
+
+if ((${#FILES[@]})); then
+  echo "[pre-push] yamllint"
+  .venv/bin/yamllint -s "${FILES[@]}"
+
+  echo "[pre-push] ansible-lint"
+  .venv/bin/ansible-lint "${FILES[@]}"
+else
+  echo "[pre-push] no YAML changes"
+fi
+
+echo "[pre-push] OK"

@@ -1,0 +1,10 @@
+extends: default
+ignore: |
+  .venv/
+  .git/
+  .molecule/
+  __pycache__/
+rules:
+  line-length:
+    max: 140
+    level: warning
